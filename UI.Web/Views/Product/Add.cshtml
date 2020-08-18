@@ -1,0 +1,71 @@
+﻿@model ApplicationCore.Interfaces.ProductViewModel
+@{
+    Layout = null;
+}
+<div>
+    <section>
+
+        <form asp-formhelper="true" id="Create" enctype="multipart/form-data" asp-controller="Product" asp-action="Add">
+
+            <fieldset>
+                <h2>Create</h2>
+                <div id="result">
+                    <div class="alert alert-success" role="alert">
+                        <i class="fa fa-info-circle">&nbsp;</i>Caso não tenha categoria desejada clique <a>aqui</a>.
+                    </div>
+                </div>
+
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-nome">Nome</span>
+                            <input type="text" name="Name" class="form-control" id="Name" aria-describedby="form-nome">
+
+                            <span class="input-group-addon" id="form-nome">Categoria:</span>
+                            <input id="CategoryId" name="CategoryId" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-nome">Preço</span>
+                            <input type="number" name="Value" class="form-control" id="Value" aria-describedby="form-value">
+
+                            <span class="input-group-addon" id="form-value">QTD.Estoque</span>
+                            <input id="Estoque" name="Estoque" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="col-lg-10">
+                    <textarea rows="4" type="text" class="form-control" id="Description" name="Description" placeholder="Descrição" required></textarea>
+                </div>
+                <br />
+                <div class="btn-toolbar" role="toolbar">
+                    <br />
+                    <div class="row col-lg-8">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-nome">Imagem</span>
+                            <input type="file" class="form-control" id="file" name="file" placeholder="Upload of avatar" required>
+
+                        </div>
+
+                    </div>
+                </div>
+                
+
+            </fieldset>
+            <hr />
+            <div class="row" align="center">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times">&nbsp</i>Fechar</button>
+                <button type="button" class="btn btn-default" value="Register" onclick="Insert_Dao()"><i class="fa fa-floppy-o">&nbsp</i>Salvar</button>
+
+            </div>
+        </form>
+        
+    </section>
+</div>

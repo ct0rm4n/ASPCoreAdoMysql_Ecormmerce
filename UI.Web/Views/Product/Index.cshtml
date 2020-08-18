@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="Legenda_Cadastro" align="center"><h1><i class="glyphicon glyphicon-user">&nbsp;</i>Controle de Produtos</h1></div>
+
+<div id="ResultG"></div>
+
+<a class="btn btn-default" onclick="Insert()" id="GridButtons">&nbsp;<i class="glyphicon glyphicon-plus">&nbsp;</i>Novo</a>
+<br />
+<table id="Tb_Users" class="table">
+    <thead>
+        <tr>
+            <th>Sit</th>  
+            <th></th>
+            <th>Nome</th>            
+            <th>Descrição</th>
+            <th>Registrado:</th>
+            <th>Preço</th>
+            <th>Inativo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Products)
+        {
+        <tr>
+            <td>
+
+                @if (item.Estoque == null || item.Estoque == 0)
+                {
+                    <span class="badge badge-danger" style="color: black; background-color: red;">Esgotado</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger" style="color: black; background-color: blue;">Em estoque</span>
+                }
+            </td>
+            <td>
+                @if (item.Avatar == null || item.Avatar == "")
+                {
+                    <img src="~/images/unnamed.jpg" id="Avatar" width="100px" />
+                }
+                else
+                {
+                    <img src="@item.Avatar" id="Avatar" width="100px" />
+                }
+            </td>
+            <td>@item.Name</td>
+
+            <td>@item.Description</td>
+
+            <td></td>
+
+            <td>@item.Value</td>
+
+            <td>@item.Delete</td>
+
+            <td>
+
+                <a title="Visualizar"><i class="fa fa-low-vision fa-2x"></i></a>
+                <a title="Editar" onclick="Edit(@item.ProductId)"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                <a title="Remover"><i class="fa fa-times fa-2x"></i></a>
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
