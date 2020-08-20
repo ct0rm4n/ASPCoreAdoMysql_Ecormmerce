@@ -8,7 +8,7 @@
         <form asp-formhelper="true" id="Edit" enctype="multipart/form-data" asp-controller="Product" asp-action="Edit">
 
             <fieldset>
-                <h2>Edit</h2>
+                <h2><i class="glyphicon glyphicon-pencil">&nbsp;</i>Editar produto</h2>
                 <div id="result">
                     <div class="alert alert-success" role="alert">
                         <i class="fa fa-info-circle">&nbsp;</i>Caso não tenha categoria desejada clique <a>aqui</a>.
@@ -29,33 +29,32 @@
                 </div>
                 <br />
                 <div class="btn-toolbar" role="toolbar">
-                    <div class="row col-lg-12">
+                    <div class="row col-lg-10">
                         <div class="input-group">
                             <span class="input-group-addon" id="form-nome">Preço</span>
                             <input type="number" name="Value" class="form-control" value="@Model.Value" id="Value" aria-describedby="form-value">
 
                             <span class="input-group-addon" id="form-value">QTD.Estoque</span>
-                            <input id="Estoque" name="Estoque" value="@Model.Estoque" class="form-control">
+                            <input id="Stock" name="Stock" value="@Model.Stock" class="form-control">
                         </div>
 
                     </div>
                 </div>
                 <br />
-                <div class="col-lg-10">
-                    <textarea rows="4" type="text" class="form-control" id="Description" value="@Model.Description" name="Description" placeholder="Descrição" required></textarea>
+                <div class="row col-lg-10">
+                    <textarea rows="4" type="text" class="form-control" id="Description" value="@Model.Description" name="Description" placeholder="Descrição" required>@Model.Description</textarea>
                 </div>
                 <br />
-                <div class="btn-toolbar" role="toolbar">
-                    <br />
-                    <div class="row col-lg-8">
+                <div class="row col-lg-6">
+                    <div class=" btn-toolbar" role="toolbar">
+                        <br />
                         <div class="input-group">
                             <span class="input-group-addon" id="form-nome">Imagem</span>
                             <input type="file" class="form-control" id="file" name="file" placeholder="Upload of avatar" required>
 
                         </div>
-
                     </div>
-                </div>
+                </div>               
 
             </fieldset>
             <hr />

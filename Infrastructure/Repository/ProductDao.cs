@@ -14,8 +14,8 @@ namespace Infrastructure.Repository
         {
             string day = DateTime.Now.ToString("yyyy-MM-dd");
             string CommandText = "INSERT INTO challenge.Product" +
-                "(`Name`, `CategoryId`, `Estoque`,  `Description`,`Value`,`Delete`,`Avatar`)" +
-                "VALUES('" + product.Name + "', '" + product.CategoryId + "', '" + product.Estoque + "', '"  + product.Description + "','" + product.Value + "', 0,'"+product.Avatar+"');";
+                "(`Name`, `CategoryId`, `Stock`, `Description`,`Value`,`Delete`,`Avatar`)" +
+                "VALUES('" + product.Name + "', '" + product.CategoryId + "', '" + product.Stock + "', '"  + product.Description + "','" + product.Value + "', 0,'"+product.Avatar+"');";
             Open();
             try
             {
@@ -34,8 +34,27 @@ namespace Infrastructure.Repository
         {
             string day = DateTime.Now.ToString("yyyy-MM-dd");
             string CommandText = "UPDATE challenge.product "+
-            "SET `Name`= '"+product.Name+ "', `CategoryId`= " + product.CategoryId + "`Estoque`= " + product.Estoque + ", `Description`= '" + product.Description + "', `Value`= "+product.Value+", `Delete`= 0, `Avatar`= '"+product.Avatar+"'" +
+            "SET `Name`= '"+product.Name+ "', `CategoryId`= " + product.CategoryId + ",`Stock`= " + product.Stock + ", `Description`= '" + product.Description + "', `Value`= "+product.Value+", `Delete`= 0, `Avatar`= '"+product.Avatar+"'" +
             " WHERE `ProductId`= " + product.ProductId + ";";
+            Open();
+            try
+            {
+                MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
+                //run query
+                myCommand.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                Console.Write(string.Format("Retorn an error ref:" + e));
+            }
+
+        }
+
+        public void RemoveProduct(ProductViewModel product)
+        {
+            string day = DateTime.Now.ToString("yyyy-MM-dd");
+            string CommandText = "UPDATE challenge.product " +
+            "SET `Delete`=1 WHERE `ProductId`= " + product.ProductId + ";";
             Open();
             try
             {
@@ -61,7 +80,7 @@ namespace Infrastructure.Repository
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT `ProductId`, `Name`, `CategoryId`, `Estoque`, `Value`, `Description`,`Delete`,`Avatar`  FROM challenge.Product";
+                    cmd.CommandText = "SELECT `ProductId`, `Name`, `CategoryId`, `Stock`, `Value`, `Description`,`Delete`,`Avatar`  FROM challenge.Product";
                     var dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     Close();
                     var dataTable = new DataTable();
@@ -88,7 +107,7 @@ namespace Infrastructure.Repository
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT `ProductId`, `Name`,`CategoryId`, `Estoque`, `Value`, `Description`,`Delete`,`Avatar` FROM challenge.product where ProductId ='" + Id+"'";
+                    cmd.CommandText = "SELECT `ProductId`, `Name`,`CategoryId`, `Stock`, `Value`, `Description`,`Delete`,`Avatar` FROM challenge.product where ProductId ='" + Id+"'";
                     var dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     Close();
                     var dataTable = new DataTable();
@@ -114,11 +133,11 @@ namespace Infrastructure.Repository
                     ProductId = Convert.ToInt32(row["ProductId"]),
                     Name = Convert.ToString(row["Name"]) ,
                     CategoryId = Convert.ToInt32(row["CategoryId"]),
-                    Estoque = Convert.ToInt32(row["Estoque"]),
+                    Stock = Convert.ToInt32(row["Stock"]),
                     Value = Convert.ToDouble(row["Value"]),
                     Description = Convert.ToString(row["Description"]),
                     Delete = Convert.ToBoolean(row["Delete"]),
-                    Avatar = Convert.ToString(row["Avatar"])??"N/A"
+                    Avatar = Convert.ToString(row["Avatar"])
                 };
             }
 
@@ -135,11 +154,11 @@ namespace Infrastructure.Repository
                     ProductId = Convert.ToInt32(row["ProductId"]),
                     Name = Convert.ToString(row["Name"]),
                     CategoryId = Convert.ToInt32(row["CategoryId"]),
-                    Estoque = Convert.ToInt32(row["Estoque"]),
+                    Stock = Convert.ToInt32(row["Stock"]),
                     Value = Convert.ToDouble(row["Value"]),
                     Description = Convert.ToString(row["Description"]),
                     Delete = Convert.ToBoolean(row["Delete"]),
-                    Avatar = Convert.ToString(row["Avatar"]) ?? "N/A"
+                    Avatar = Convert.ToString(row["Avatar"])
                 };
 
             }

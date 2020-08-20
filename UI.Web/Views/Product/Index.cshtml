@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="Legenda_Cadastro" align="center"><h1><i class="glyphicon glyphicon-user">&nbsp;</i>Controle de Produtos</h1></div>
+<div class="Legenda_Cadastro" align="center"><h1><i class="fa fa-cogs">&nbsp;</i>Controle de Produtos</h1></div>
 
 <div id="ResultG"></div>
 
@@ -16,7 +16,7 @@
             <th></th>
             <th>Nome</th>            
             <th>Descrição</th>
-            <th>Registrado:</th>
+            <th>Estoque:</th>
             <th>Preço</th>
             <th>Inativo</th>
             <th>Ações</th>
@@ -28,13 +28,13 @@
         <tr>
             <td>
 
-                @if (item.Estoque == null || item.Estoque == 0)
+                @if (item.Stock == null || item.Stock == 0)
                 {
-                    <span class="badge badge-danger" style="color: black; background-color: red;">Esgotado</span>
+                    <span class="badge badge-danger" style="color: white; background-color: red;">Esgotado</span>
                 }
                 else
                 {
-                    <span class="badge badge-danger" style="color: black; background-color: blue;">Em estoque</span>
+                    <span class="badge badge-danger" style="color: white; background-color: blue;">Disponivel</span>
                 }
             </td>
             <td>
@@ -51,7 +51,7 @@
 
             <td>@item.Description</td>
 
-            <td></td>
+            <td>@item.Stock</td>
 
             <td>@item.Value</td>
 
@@ -61,7 +61,7 @@
 
                 <a title="Visualizar"><i class="fa fa-low-vision fa-2x"></i></a>
                 <a title="Editar" onclick="Edit(@item.ProductId)"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                <a title="Remover"><i class="fa fa-times fa-2x"></i></a>
+                <a title="Remover" onclick="Remove(@item.ProductId)"><i class="fa fa-times fa-2x"></i></a>
 
             </td>
         </tr>

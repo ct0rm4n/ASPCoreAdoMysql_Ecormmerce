@@ -1,30 +1,55 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Infrastructure.Repository;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace Infrastructure.Data
 {
     public class Conection
     {
-        //string WebConfig_Con = System.Configuration.ConfigurationManager.ConnectionStrings.ToString();
-        protected string connection_On = "Server=localhost; Port=3306; User Id=root;Database=challenge;Pwd=xxxv3265;";
+        protected string connection_On = "Server=localhost; Port=3306; User Id=root;Pwd=xxxv3265; Database=challenge";
         protected MySqlConnection connection = null;
-        // GET: /Conection/
+        protected string database = "create DATABASE if not exists `challenge`;" +
+                                    "use `challenge`;" +
+                                    "CREATE TABLE if not exists `Category` (" +
+                                        "`CategoryId` INT NOT NULL AUTO_INCREMENT," +
+                                        "`Description` VARCHAR(240) NOT NULL," +
+                                        "`Delete` BOOLEAN DEFAULT '0'," +
+                                        "PRIMARY KEY(`CategoryId`)" +
+                                    ");" +
+                                    "CREATE TABLE if not exists `Product` (" +
+                                        "`ProductId` INT NOT NULL AUTO_INCREMENT," +
+                                        "`Name` VARCHAR(240) NOT NULL," +
+                                        "`Description` VARCHAR(240) NOT NULL," +
+                                        "`Value` DECIMAL NOT NULL," +
+                                        "`CategoryId` INT NOT NULL," +
+                                        "`Stock` INT DEFAULT '0'," +
+                                        "`Avatar` VARCHAR(240)," +
+                                        "`Delete` BOOLEAN DEFAULT '0'," +
+                                        "UNIQUE KEY `ProductCategory` (`ProductId`,`CategoryId`) USING BTREE," +
+                                        "PRIMARY KEY(`ProductId`)" +
+                                    ");";
+                                    
         public void Open()
         {
             try
-            {
-
-
-                connection = new MySqlConnection(connection_On);
+            {   
+                
+                connection = new MySqlConnection(connection_On);                
                 connection.Open();
+                
 
             }
             catch (Exception e)
             {
-
+                connection = new MySqlConnection("Server =localhost; Port=3306; User Id=root;Pwd=xxxv3265;");
+                MySql.Data.MySqlClient.MySqlCommand myCommandCreateDb = new MySql.Data.MySqlClient.MySqlCommand(database, connection);
+                connection.Open();
+                myCommandCreateDb.ExecuteNonQuery();
                 connection.Close();
+                Open();
                 throw e;
 
             }
@@ -54,5 +79,12 @@ namespace Infrastructure.Data
                 connection.Close();
             }
         }
+
+
+
+        public void CreateDatabase() { 
+            
+        }
+
     }
 }

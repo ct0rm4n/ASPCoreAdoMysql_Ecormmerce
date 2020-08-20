@@ -12,29 +12,36 @@ using System.Data;
 
 namespace UI.Web.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ProductController : Controller
     {
         Infrastructure.Repository.ProductDao dao = new Infrastructure.Repository.ProductDao();
 
-        //Define uma instância de IHostingEnvironment
         IHostingEnvironment _appEnvironment;
-        //Injeta a instância no construtor para poder usar os recursos
         public ProductController(IHostingEnvironment env)
         {
             _appEnvironment = env;
         }
+        [HttpGet("Index/", Name = "Index")]
         public IActionResult Index()
+        {
+            ViewBag.Products = dao.Convert_To_ViewModel_Readings(dao.GetProducts());
+            
+            return View();
+        }
+        [HttpGet("Market/", Name = "Market")]
+        public IActionResult Market()
         {
             ViewBag.Products = dao.Convert_To_ViewModel_Readings(dao.GetProducts());
             return View();
         }
+        [HttpPost("Add")]
         public ActionResult Add()
-        {
-            //Open modal bootstrap of insert form
-
+        {           
             return View();
         }
-        [HttpPost]
+        [HttpPost("Add/{model}")]
         public async Task<JsonResult> Add(ProductViewModel model)
         {
             var errors = new List<string>();
@@ -82,16 +89,14 @@ namespace UI.Web.Controllers
             return Json(new { success = success, message = result });
             //return Ok("Success");
         }
-
+        [NonAction]
         public ActionResult Edit(int Id)
-        {
-            //Open in modal bootstrap with insert form
-          
-            //CONVERT with a query to datatable to ViewModel
+        {            
             ProductViewModel model = (ProductViewModel)dao.Convert_To_ViewModel(dao.GetProductById(Id));
+
             return View(model);
         }
-        [HttpPost]
+        [HttpPost("Edit/{model}")]
         public async Task<JsonResult> Edit(ProductViewModel model)
         {
             var errors = new List<string>();
@@ -110,7 +115,7 @@ namespace UI.Web.Controllers
                     //run execute MYSQL query
                     dao.EditProduct(model);
                     success = true;
-                    result = "Cadastrado com sucesso.";
+                    result = "Alterado com sucesso.";
                 }
                 else
                 {
@@ -137,38 +142,64 @@ namespace UI.Web.Controllers
 
             return Json(new { success = success, message = result });
         }
-        
+        [HttpPut("Remove/{model}")]
+        public ActionResult Remove(int Id)
+        {
+            //Open in modal bootstrap with insert form
 
+            //CONVERT with a query to datatable to ViewModel
+            ProductViewModel model = (ProductViewModel)dao.Convert_To_ViewModel(dao.GetProductById(Id));
+            return View(model);
+        }
         
+        [NonAction]
+        public async Task<JsonResult> Remove(ProductViewModel model)
+        {
+            var errors = new List<string>();
+            var result = "";
+            var success = false;
+            try
+            {
+                
+                dao.RemoveProduct(model);
+                success = true;
+                result = "Removido com sucesso.";
 
-        //método para enviar os arquivos usando a interface IFormFile
+            }
+            catch (Exception ex)
+            {
+                errors.Add("Ocorreu o erro:" + ex);
+                success = false;
+                result = errors.ToString();
+            }
+            if (success == false)
+            {
+                return Json(new { success = false, message = errors });
+            }
+
+            return Json(new { success = success, message = result });
+        }
+
+        [NonAction]
+
         public async Task<string> Insert_Files(List<IFormFile> arquivos, string Name)
         {
             long tamanhoArquivos = arquivos.Sum(f => f.Length);
-            // caminho completo do arquivo na localização temporária
             var caminhoArquivo = Path.GetTempFileName();
 
             string caminhoDestinoArquivoOriginal = "";
-            // processa o arquivo enviado
-            //percorre a lista de arquivos selecionados
             int count = 0;
             foreach (var arquivo in arquivos)
             {
-                count = +1;
-                //verifica se existem arquivos 
+                count = +1; 
                 if (arquivo == null || arquivo.Length == 0)
                 {
-                    //retorna a viewdata com erro
+
                     var Erro = "Error: Arquivo(s) não selecionado(s)";
                     return Erro;
                 }
-
-                // < define a pasta onde vamos salvar os arquivos >
                 string pasta = Name.Replace(" ","_");
-                // Define um nome para o arquivo enviado incluindo o sufixo obtido de milesegundos
                 string nomeArquivo = pasta+"_"+count;
-
-                //verifica qual o tipo de arquivo : jpg, gif, png, pdf ou tmp
                 if (arquivo.FileName.Contains(".jpg"))
                     nomeArquivo += ".jpg";
                 else if (arquivo.FileName.Contains(".gif"))
