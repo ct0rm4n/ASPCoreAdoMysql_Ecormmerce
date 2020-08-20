@@ -12,8 +12,7 @@ using System.Data;
 
 namespace UI.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiExplorerSettings(IgnoreApi = false)]
     public class ProductController : Controller
     {
         Infrastructure.Repository.ProductDao dao = new Infrastructure.Repository.ProductDao();
@@ -23,26 +22,28 @@ namespace UI.Web.Controllers
         {
             _appEnvironment = env;
         }
-        [HttpGet("Index/", Name = "Index")]
+
+        [HttpGet("Product/", Name = "Index")]
         public IActionResult Index()
         {
             ViewBag.Products = dao.Convert_To_ViewModel_Readings(dao.GetProducts());
-            
+
             return View();
         }
-        [HttpGet("Market/", Name = "Market")]
+        [HttpGet("Product/Market")]
         public IActionResult Market()
         {
             ViewBag.Products = dao.Convert_To_ViewModel_Readings(dao.GetProducts());
             return View();
         }
-        [HttpPost("Add")]
+        [HttpGet("Product/Add")]
         public ActionResult Add()
-        {           
+        {
             return View();
         }
-        [HttpPost("Add/{model}")]
-        public async Task<JsonResult> Add(ProductViewModel model)
+        [HttpPost]
+        [Route("Product/Add_/")]
+        public async Task<JsonResult> Add_(ProductViewModel model)
         {
             var errors = new List<string>();
             var result = "";
@@ -52,20 +53,20 @@ namespace UI.Web.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    //if user insert images                
+                                    
                     if (model.file != null && model.file.Count() > 0)
                     {
-                        //insert imgs and define patch of principal image on the product table                 
+                                         
                         model.Avatar = await Insert_Files(model.file, model.Name);
                     }
-                    //DAO Mysql - run the query insert in table
+                    
                     dao.InserProduct(model);
                     success = true;
                     result = "Cadastrado com sucesso.";
                 }
                 else
                 {
-                    //caso de validação falhar
+                    
                     foreach (var modelStateVal in ViewData.ModelState.Values)
                     {
 
@@ -84,10 +85,9 @@ namespace UI.Web.Controllers
             if (success == false)
             {
                 return Json(new { success = false, message = errors });
-                //return Ok("Success");
+                
             }
-            return Json(new { success = success, message = result });
-            //return Ok("Success");
+            return Json(new { success = success, message = result });            
         }
         [NonAction]
         public ActionResult Edit(int Id)
@@ -182,7 +182,6 @@ namespace UI.Web.Controllers
         }
 
         [NonAction]
-
         public async Task<string> Insert_Files(List<IFormFile> arquivos, string Name)
         {
             long tamanhoArquivos = arquivos.Sum(f => f.Length);
@@ -244,5 +243,6 @@ namespace UI.Web.Controllers
             //retorna a viewdata
             return caminhoDestinoArquivoOriginal.Replace("\\","/");
         }
+
     }
 }

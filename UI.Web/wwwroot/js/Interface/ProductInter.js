@@ -1,5 +1,5 @@
 ﻿function Insert() {
-    $("#MeuModal").load("/api/Product/Add",
+    $("#MeuModal").load("/Product/Add",
         function () {            
             $('#myModal').modal("show");
         });
@@ -7,7 +7,7 @@
 }
 
 function Edit(id) {
-    $("#MeuModal").load("/api/Product/Edit/"+id,
+    $("#MeuModal").load("/Product/Edit/"+id,
         function () {
             $('#myModal').modal("show");
         });
@@ -15,7 +15,7 @@ function Edit(id) {
 }
 
 function Remove(id) {
-    $("#MeuModal").load("/api/Product/Remove/" + id,
+    $("#MeuModal").load("/Product/Remove/" + id,
         function () {
             $('#myModal').modal("show");
         });

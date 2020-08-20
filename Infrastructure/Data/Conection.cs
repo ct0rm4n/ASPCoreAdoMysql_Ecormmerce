@@ -9,7 +9,8 @@ namespace Infrastructure.Data
 {
     public class Conection
     {
-        protected string connection_On = "Server=localhost; Port=3306; User Id=root;Pwd=xxxv3265; Database=challenge";
+        public string connection_On = "Server=localhost; Port=3306; User Id=root;Pwd=xxxv3265; Database=challenge";
+        public string connection_On_HangFire = "server=localhost; database=challenge; password='xxxv3265'; uid=root; port=3306; Allow User Variables=True";
         protected MySqlConnection connection = null;
         protected string database = "create DATABASE if not exists `challenge`;" +
                                     "use `challenge`;" +

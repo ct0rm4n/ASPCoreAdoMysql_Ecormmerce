@@ -2,7 +2,11 @@
 $(document).ready(function () {
 	$('table').DataTable({
 		pageLength: 6,
-		lengthChange: false
+		lengthChange: false,
+		dom: 'Bfrtip',
+		buttons: [
+			'copy', 'csv', 'excel', 'pdf', 'print'
+		]
 	});
 	/*add cart e-comerce*/$(".largeGrid").click(function () {
 		$(this).find('a').addClass('active');
