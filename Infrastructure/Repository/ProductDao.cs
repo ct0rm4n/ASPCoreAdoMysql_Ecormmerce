@@ -12,7 +12,6 @@ namespace Infrastructure.Repository
     {
         public void InserProduct(ProductViewModel product)
         {
-            string day = DateTime.Now.ToString("yyyy-MM-dd");
             string CommandText = "INSERT INTO challenge.Product" +
                 "(`Name`, `CategoryId`, `Stock`, `Description`,`Value`,`Delete`,`Avatar`)" +
                 "VALUES('" + product.Name + "', '" + product.CategoryId + "', '" + product.Stock + "', '"  + product.Description + "','" + product.Value + "', 0,'"+product.Avatar+"');";
@@ -31,7 +30,6 @@ namespace Infrastructure.Repository
         }
         public void EditProduct(ProductViewModel product)
         {
-            string day = DateTime.Now.ToString("yyyy-MM-dd");
             string CommandText = "UPDATE challenge.product "+
             "SET `Name`= '"+product.Name+ "', `CategoryId`= " + product.CategoryId + ",`Stock`= " + product.Stock + ", `Description`= '" + product.Description + "', `Value`= "+product.Value+", `Delete`= 0, `Avatar`= '"+product.Avatar+"'" +
             " WHERE `ProductId`= " + product.ProductId + ";";
@@ -118,9 +116,8 @@ namespace Infrastructure.Repository
             }
         }
 
-        public IEnumerable<object> Convert_To_ViewModel_Readings(DataTable dataTable)
+        public IEnumerable<object> ConvertToViewModelReadings(DataTable dataTable)
         {
-            //Converto datatbale to readings viewmodels in html
             foreach (DataRow row in dataTable.Rows)
             {
                 yield return new ApplicationCore.Interfaces.ProductViewModel
@@ -137,13 +134,11 @@ namespace Infrastructure.Repository
             }
 
         }
-        public ProductViewModel Convert_To_ViewModel(DataTable dataTable)
+        public ProductViewModel ConvertToViewModel(DataTable dataTable)
         {
-            //Converto datatbale to readings viewmodels in html
             ProductViewModel product = new ApplicationCore.Interfaces.ProductViewModel();
             foreach (DataRow row in dataTable.Rows)
             {
-                //foreach but datatable count have a 1 rows
                 product = new ApplicationCore.Interfaces.ProductViewModel
                 {
                     ProductId = Convert.ToInt32(row["ProductId"]),

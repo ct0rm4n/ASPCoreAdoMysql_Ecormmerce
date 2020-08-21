@@ -11,7 +11,7 @@ namespace UI.Web.Controllers
         Infrastructure.Repository.ProductDao dao = new Infrastructure.Repository.ProductDao();
         public string String()
         {            
-            return dao.connection_On_HangFire;
+            return dao.connectionOnHangFire;
         }
         public void VerifyStockAsync()
         {

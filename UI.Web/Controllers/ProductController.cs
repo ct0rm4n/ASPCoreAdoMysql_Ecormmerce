@@ -26,7 +26,7 @@ namespace UI.Web.Controllers
         [HttpGet("Product/Index", Name = "Index")]
         public IActionResult Index()
         {
-            ViewBag.Products = dao.Convert_To_ViewModel_Readings(dao.GetProducts());
+            ViewBag.Products = dao.ConvertToViewModelReadings(dao.GetProducts());
 
             return View();
         }
@@ -34,20 +34,20 @@ namespace UI.Web.Controllers
         [HttpGet("Product/Market")]
         public IActionResult Market()
         {
-            ViewBag.Products = dao.Convert_To_ViewModel_Readings(dao.GetProducts());
+            ViewBag.Products = dao.ConvertToViewModelReadings(dao.GetProducts());
             return View();
         }
         [HttpGet("Product/Add")]
         public ActionResult Add()
         {
             Infrastructure.Repository.CategoryDao daoCategory = new Infrastructure.Repository.CategoryDao();
-            ViewBag.Categoryid = daoCategory.Convert_To_ViewModel_Readings(daoCategory.GetCategory());
+            ViewBag.Categoryid = daoCategory.ConvertToViewModelReadings(daoCategory.GetCategory());
             return View();
         }
 
         [HttpPost]
-        [Route("Product/Add_/")]
-        public async Task<JsonResult> Add_(ProductViewModel model)
+        [Route("Product/Add/")]
+        public async Task<JsonResult> Add(ProductViewModel model)
         {
             var errors = new List<string>();
             var result = "";
@@ -55,27 +55,20 @@ namespace UI.Web.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {
-
-                                    
+                {                                    
                     if (model.file != null && model.file.Count() > 0)
-                    {
-                                         
-                        model.Avatar = await Insert_Files(model.file, model.Name);
-                    }
-                    
+                    {                                         
+                        model.Avatar = await InsertFiles(model.file, model.Name);
+                    }                    
                     dao.InserProduct(model);
                     success = true;
                     result = "Cadastrado com sucesso.";
                 }
                 else
-                {
-                    
+                {                    
                     foreach (var modelStateVal in ViewData.ModelState.Values)
                     {
-
                         errors.AddRange(modelStateVal.Errors.Select(error => "</br>" + error.ErrorMessage));
-
                     }
                     success = false;                    
                 }
@@ -88,8 +81,7 @@ namespace UI.Web.Controllers
             }
             if (success == false)
             {
-                return Json(new { success = false, message = errors });
-                
+                return Json(new { success = false, message = errors });                
             }
             return Json(new { success = success, message = result });            
         }
@@ -98,13 +90,13 @@ namespace UI.Web.Controllers
         public ActionResult Edit(int Id)
         {
             Infrastructure.Repository.CategoryDao daoCategory = new Infrastructure.Repository.CategoryDao();
-            ProductViewModel model = (ProductViewModel)dao.Convert_To_ViewModel(dao.GetProductById(Id));
-            ViewBag.Categoryid = daoCategory.Convert_To_ViewModel_Readings(daoCategory.GetCategory());
+            ProductViewModel model = (ProductViewModel)dao.ConvertToViewModel(dao.GetProductById(Id));
+            ViewBag.Categoryid = daoCategory.ConvertToViewModelReadings(daoCategory.GetCategory());
             return View(model);
         }
 
-        [HttpPost("Product/Edit_/")]
-        public async Task<JsonResult> Edit_(ProductViewModel model)
+        [HttpPost("Product/Edit/")]
+        public async Task<JsonResult> Edit(ProductViewModel model)
         {
             var errors = new List<string>();
             var result = "";
@@ -112,26 +104,20 @@ namespace UI.Web.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {
-                     
+                {                     
                     if (model.file!=null && model.file.Count() > 0)
-                    {
-                        //insert imgs and define patch of principal image on the product table                 
-                        model.Avatar = await Insert_Files(model.file, model.Name);
-                    }
-                    //run execute MYSQL query
+                    {                                        
+                        model.Avatar = await InsertFiles(model.file, model.Name);
+                    }                    
                     dao.EditProduct(model);
                     success = true;
                     result = "Alterado com sucesso.";
                 }
                 else
-                {
-                    //caso de validação falhar
+                {                    
                     foreach (var modelStateVal in ViewData.ModelState.Values)
                     {
-
                         errors.AddRange(modelStateVal.Errors.Select(error => "</br>" + error.ErrorMessage));
-
                     }
                     success = false;
                 }
@@ -153,22 +139,18 @@ namespace UI.Web.Controllers
         [HttpGet("Product/Remove/{Id}")]
         public ActionResult Remove(int Id)
         {
-            //Open in modal bootstrap with insert form
-
-            //CONVERT with a query to datatable to ViewModel
-            ProductViewModel model = (ProductViewModel)dao.Convert_To_ViewModel(dao.GetProductById(Id));
+            ProductViewModel model = (ProductViewModel)dao.ConvertToViewModel(dao.GetProductById(Id));
             return View(model);
         }
 
-        [HttpPost("Product/Remove_/")]
-        public async Task<JsonResult> Remove_(ProductViewModel model)
+        [HttpPost("Product/Remove/")]
+        public async Task<JsonResult> Remove(ProductViewModel model)
         {
             var errors = new List<string>();
             var result = "";
             var success = false;
             try
-            {
-                
+            {                
                 dao.RemoveProduct(model);
                 success = true;
                 result = "Removido com sucesso.";
@@ -189,11 +171,10 @@ namespace UI.Web.Controllers
         }
 
         [NonAction]
-        public async Task<string> Insert_Files(List<IFormFile> arquivos, string Name)
+        public async Task<string> InsertFiles(List<IFormFile> arquivos, string Name)
         {
             long tamanhoArquivos = arquivos.Sum(f => f.Length);
             var caminhoArquivo = Path.GetTempFileName();
-
             string caminhoDestinoArquivoOriginal = "";
             int count = 0;
             foreach (var arquivo in arquivos)
@@ -221,33 +202,21 @@ namespace UI.Web.Controllers
                     nomeArquivo += ".pdf";
                 else
                     nomeArquivo += ".tmp";
-
-                //< obtém o caminho físico da pasta wwwroot >
-                string caminho_WebRoot = _appEnvironment.WebRootPath;
-                // monta o caminho onde vamos salvar o arquivo :  ~\wwwroot\Arquivos\Arquivos_Usuario\Recebidos
-                string caminhoDestinoArquivo = caminho_WebRoot + "\\images\\" + pasta + "\\";
-                //create a folde if dont exist
+                string caminho_WebRoot = _appEnvironment.WebRootPath;                
+                string caminhoDestinoArquivo = caminho_WebRoot + "\\images\\" + pasta + "\\";                
                 if (!Directory.Exists(caminhoDestinoArquivo))
-                    Directory.CreateDirectory(caminhoDestinoArquivo);
-                // incluir a pasta Recebidos e o nome do arquiov enviado : ~\wwwroot\images\produtoid\
-                caminhoDestinoArquivoOriginal = caminhoDestinoArquivo  + nomeArquivo;
-                //remove anothers
-                
-                //copia o arquivo para o local de destino original(caso tenha já o mesmo sobreescreve)
+                    Directory.CreateDirectory(caminhoDestinoArquivo);                
+                caminhoDestinoArquivoOriginal = caminhoDestinoArquivo  + nomeArquivo;                
                 using (var stream = new FileStream(caminhoDestinoArquivoOriginal, FileMode.Append))
-                {
-                    //remove anothers                    
+                {       
                     await arquivo.CopyToAsync(stream);
                 }
             }
-
-            //monta a ViewData que será exibida na view como resultado do envio 
             ViewData["Resultado"] = $"{arquivos.Count} arquivos foram enviados ao servidor, " +
              $"com tamanho total de : {tamanhoArquivos} bytes";
             int index = caminhoDestinoArquivoOriginal.IndexOf("\\images\\");
             if (index > 0)
                 caminhoDestinoArquivoOriginal = caminhoDestinoArquivoOriginal.Substring(index);            
-            //retorna a viewdata
             return caminhoDestinoArquivoOriginal.Replace("\\","/");
         }
 

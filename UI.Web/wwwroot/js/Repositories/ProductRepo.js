@@ -1,4 +1,4 @@
-﻿function Insert_Dao() {
+﻿function InsertDao() {
     var create = $("#Create").serialize();
     console.log(create);
     var model = new FormData();
@@ -10,7 +10,7 @@
     model.append('Stock', $('#Stock').val());
     $.ajax({
         type: "Post",
-        url: "../Product/Add_/",
+        url: "../Product/Add/",
         processData: false,
         contentType: false,
         data: model,
@@ -39,7 +39,7 @@
         }
     })
 }
-function Edit_Dao() {
+function EditDao() {
     var create = $("#Edit").serialize();
     console.log(create);
     var formData = new FormData();
@@ -54,7 +54,7 @@ function Edit_Dao() {
     formData.append('Avatar', $('#Avatar').val());
     $.ajax({
         type: "Post",
-        url: "../Product/Edit_/",
+        url: "../Product/Edit/",
         processData: false,
         contentType: false,
         data: formData,
@@ -80,7 +80,7 @@ function Edit_Dao() {
     })
 }
 
-function Remove_Dao() {
+function RemoveDao() {
     var create = $("#Remove").serialize();
     console.log(create);
     var formData = new FormData();
@@ -93,7 +93,7 @@ function Remove_Dao() {
     
     $.ajax({
         type: "Post",
-        url: "../Product/Remove_/",
+        url: "../Product/Remove/",
         processData: false,
         contentType: false,
         data: formData,
@@ -119,7 +119,7 @@ function Remove_Dao() {
     })
 }
 function ExportToPDF() {
-    var exportURL = getRootUrl() + "YourControllerName/ExportPDF?type=" + type;
+    var exportURL = getRootUrl() + "Product/ExportPDF?type=" + type;
     window.location.href = exportURL;
 }
 

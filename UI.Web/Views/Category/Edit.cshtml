@@ -1,0 +1,42 @@
+﻿@model ApplicationCore.Interfaces.CategoryViewModel
+@{
+    Layout = null;
+}
+<div>
+    <section>
+
+        <form asp-formhelper="true" id="Edit" enctype="multipart/form-data" asp-controller="Product" asp-action="Edit">
+
+            <fieldset>
+                <h2><i class="glyphicon glyphicon-pencil">&nbsp;</i>Editar categoria</h2>
+                <div id="result">
+                    
+                </div>
+                <input style="display:none" type="number" name="CategoryId" class="form-control" id="CategoryId" value="@Model.CategoryId" aria-describedby="form-nome">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-nome">Nome</span>
+                            <input type="text" name="Name" class="form-control" id="Name" value="@Model.Name" aria-describedby="form-nome">
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="row col-lg-10">
+                    <textarea rows="4" type="text" class="form-control" id="Description" value="@Model.Description" name="Description" placeholder="Descrição" required>@Model.Description</textarea>
+                </div>               
+
+            </fieldset>
+            <hr />
+            <div class="row" align="center">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times">&nbsp</i>Fechar</button>
+                <button type="button" class="btn btn-default" value="Register" onclick="EditCatDao()"><i class="fa fa-floppy-o">&nbsp</i>Salvar</button>
+
+            </div>
+        </form>
+
+    </section>
+</div>

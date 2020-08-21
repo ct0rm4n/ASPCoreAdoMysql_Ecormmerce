@@ -20,7 +20,6 @@ namespace Infrastructure.Repository
             try
             {
                 MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
-                //run query
                 myCommand.ExecuteNonQuery();
             }
             catch (MySqlException e)
@@ -28,8 +27,7 @@ namespace Infrastructure.Repository
                 Console.Write(string.Format("Retorn an error ref:" + e));
             }
 
-        }
-        //post to edit product afeter isert img in ~/images/ProductName/ProductName_0.png
+        }        
         public void EditCategory(CategoryViewModel product)
         {
             string day = DateTime.Now.ToString("yyyy-MM-dd");
@@ -78,7 +76,7 @@ namespace Infrastructure.Repository
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT `CategoryId`, `Name`, `Description`,`Delete` FROM challenge.Category";
+                    cmd.CommandText = "SELECT `CategoryId`, `Name`, `Description`,`Delete` FROM challenge.Category where`Delete`=0";
                     var dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     Close();
                     var dataTable = new DataTable();
@@ -104,7 +102,7 @@ namespace Infrastructure.Repository
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT `ProductId`, `Name`,`CategoryId`, `Stock`, `Value`, `Description`,`Delete`,`Avatar` FROM challenge.product where ProductId ='" + Id + "'";
+                    cmd.CommandText = "SELECT `CategoryId`, `Name`,`Description`,`Delete` FROM challenge.Category where CategoryId ='" + Id + "'";
                     var dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     Close();
                     var dataTable = new DataTable();
@@ -120,9 +118,8 @@ namespace Infrastructure.Repository
             }
         }
 
-        public IEnumerable<object> Convert_To_ViewModel_Readings(DataTable dataTable)
-        {
-            //Converto datatbale to readings viewmodels in html
+        public IEnumerable<object> ConvertToViewModelReadings(DataTable dataTable)
+        {            
             foreach (DataRow row in dataTable.Rows)
             {
                 yield return new ApplicationCore.Interfaces.CategoryViewModel
@@ -135,7 +132,7 @@ namespace Infrastructure.Repository
             }
 
         }
-        public CategoryViewModel Convert_To_ViewModel(DataTable dataTable)
+        public CategoryViewModel ConvertToViewModel(DataTable dataTable)
         {
             CategoryViewModel product = new ApplicationCore.Interfaces.CategoryViewModel();
             foreach (DataRow row in dataTable.Rows)

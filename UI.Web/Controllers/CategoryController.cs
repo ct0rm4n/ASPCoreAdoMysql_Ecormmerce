@@ -14,7 +14,7 @@ namespace UI.Web.Controllers
         [HttpGet("Category/", Name = "Category/Index")]
         public IActionResult Index()
         {
-            ViewBag.Categorys = dao.Convert_To_ViewModel_Readings(dao.GetCategory());
+            ViewBag.Categorys = dao.ConvertToViewModelReadings(dao.GetCategory());
 
             return View();
         }
@@ -24,8 +24,8 @@ namespace UI.Web.Controllers
             return View();
         }
         [HttpPost]
-        [Route("Category/Add_/")]
-        public async Task<JsonResult> Add_(CategoryViewModel model)
+        [Route("Category/Add/")]
+        public async Task<JsonResult> Add(CategoryViewModel model)
         {
             var errors = new List<string>();
             var result = "";
@@ -68,7 +68,7 @@ namespace UI.Web.Controllers
         public ActionResult Edit(int Id)
         {
 
-            CategoryViewModel model = (CategoryViewModel)dao.Convert_To_ViewModel(dao.GetCategoryById(Id));
+            CategoryViewModel model = (CategoryViewModel)dao.ConvertToViewModel(dao.GetCategoryById(Id));
 
             return View(model);
         }
@@ -83,21 +83,15 @@ namespace UI.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
-                    
-                    //run execute MYSQL query
                     dao.EditCategory(model);
                     success = true;
                     result = "Alterado com sucesso.";
                 }
                 else
-                {
-                    //caso de validação falhar
+                {                    
                     foreach (var modelStateVal in ViewData.ModelState.Values)
                     {
-
                         errors.AddRange(modelStateVal.Errors.Select(error => "</br>" + error.ErrorMessage));
-
                     }
                     success = false;
                 }
@@ -115,17 +109,14 @@ namespace UI.Web.Controllers
 
             return Json(new { success = success, message = result });
         }
-        [HttpGet("Category/Remove")]
+        [HttpGet("Category/Remove/{Id}")]
         public ActionResult Remove(int Id)
         {
-            //Open in modal bootstrap with insert form
-
-            //CONVERT with a query to datatable to ViewModel
-            CategoryViewModel model = (CategoryViewModel)dao.Convert_To_ViewModel(dao.GetCategoryById(Id));
+            CategoryViewModel model = (CategoryViewModel)dao.ConvertToViewModel(dao.GetCategoryById(Id));
             return View(model);
         }
 
-        [HttpPut("Category/Remove")]
+        [HttpPost("Category/Remove/")]
         public async Task<JsonResult> Remove(CategoryViewModel model)
         {
             var errors = new List<string>();

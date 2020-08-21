@@ -1,23 +1,22 @@
-    create DATABASE if not exists `challenge`;
-    
-    use `challenge`;
-    
-    CREATE TABLE if not exists `Product` (
-        `ProductId` INT NOT NULL AUTO_INCREMENT,
-        `Name` VARCHAR(240) NOT NULL,
-        `Description` VARCHAR(240) NOT NULL,
-        `Value` DECIMAL NOT NULL,
-        `CategoriId` INT NOT NULL,
-        `Estoque` INT DEFAULT '0',
-        `Avatar` VARCHAR(240),
-        `Delete` BOOLEAN DEFAULT '0',
-        UNIQUE KEY `ProductCategory` (`ProductId`,`CategoriId`) USING BTREE,
-        PRIMARY KEY (`ProductId`)
-    );
-    CREATE TABLE if not exists `Category` (
-        `CategoryId` INT NOT NULL AUTO_INCREMENT,
-        `Description` VARCHAR(240) NOT NULL,	
-        `Delete` BOOLEAN DEFAULT '0',	
-        PRIMARY KEY (`CategoryId`)
-    );
-    
+create DATABASE if not exists `HangFire`;
+create DATABASE if not exists `challenge`; 
+use `challenge`; 
+CREATE TABLE if not exists `Category` (
+    `CategoryId` INT NOT NULL AUTO_INCREMENT, 
+    `Name` VARCHAR(240) NOT NULL, 
+    `Description` VARCHAR(240) NOT NULL, 
+    `Delete` BOOLEAN DEFAULT '0', 
+    PRIMARY KEY(`CategoryId`) 
+); 
+CREATE TABLE if not exists `Product` ( 
+    `ProductId` INT NOT NULL AUTO_INCREMENT, 
+    `Name` VARCHAR(240) NOT NULL, 
+    `Description` VARCHAR(240) NOT NULL, 
+    `Value` DECIMAL NOT NULL, 
+    `CategoryId` INT NOT NULL, 
+    `Stock` INT DEFAULT '0', 
+    `Avatar` VARCHAR(240), 
+    `Delete` BOOLEAN DEFAULT '0', 
+    UNIQUE KEY `ProductCategory` (`ProductId`,`CategoryId`) USING BTREE, 
+    PRIMARY KEY(`ProductId`) 
+);;

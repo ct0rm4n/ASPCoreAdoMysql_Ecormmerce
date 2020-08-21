@@ -14,7 +14,7 @@
                         <i class="fa fa-info-circle">&nbsp;</i>Tem certeza que deseja remover o produto?
                     </div>
                 </div>
-                <input style="display:none" type="number" name="ProductId" class="form-control" id="ProductId" value="@Model.ProductId" aria-describedby="form-nome">
+                <input style="display:none" type="number" name="ProductId" class="form-control" id="ProductId" value="@Model.CategoryId" aria-describedby="form-nome">
                 <div class="btn-toolbar" role="toolbar">
                     <div class="row col-lg-12">
                         <div class="input-group">
@@ -35,10 +35,10 @@
             </fieldset>
             <div class="row" align="center">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times">&nbsp</i>Fechar</button>
-                <button type="button" class="btn btn-default" value="Register" onclick="RemoveDao()"><i class="fa fa-floppy-o">&nbsp</i>Confirmar</button>
+                <button type="button" class="btn btn-default" value="Register" onclick="RemoveCatDao()"><i class="fa fa-floppy-o">&nbsp</i>Confirmar</button>
 
             </div>
         </form>
     </section>
 </div>
-        
+

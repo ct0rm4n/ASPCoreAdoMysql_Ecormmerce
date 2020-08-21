@@ -63,15 +63,13 @@ namespace UI.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             app.UseHangfireServer();
-            app.UseHangfireDashboard();
-            
+            app.UseHangfireDashboard();            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

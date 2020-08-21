@@ -10,7 +10,7 @@ namespace Infrastructure.Data
     public class Conection
     {
         public string connection_On = "Server=localhost; Port=3306; User Id=root;Pwd=xxxv3265; Database=challenge";
-        public string connection_On_HangFire = "server=localhost; database=HangFire; password='xxxv3265'; uid=root; port=3306; Allow User Variables=True";
+        public string connectionOnHangFire = "server=localhost; database=HangFire; password='xxxv3265'; uid=root; port=3306; Allow User Variables=True";
         protected MySqlConnection connection = null;
         protected string database = "create DATABASE if not exists `HangFire`;"+
                                     "create DATABASE if not exists `challenge`;" +
@@ -33,19 +33,15 @@ namespace Infrastructure.Data
                                         "`Delete` BOOLEAN DEFAULT '0'," +
                                         "UNIQUE KEY `ProductCategory` (`ProductId`,`CategoryId`) USING BTREE," +
                                         "PRIMARY KEY(`ProductId`)" +
-                                    ");";
-                                    
+                                    ");";                                   
 
 
         public void Open()
         {
             try
-            {   
-                
+            {                   
                 connection = new MySqlConnection(connection_On);                
                 connection.Open();
-                
-
             }
             catch (Exception e)
             {
@@ -71,14 +67,11 @@ namespace Infrastructure.Data
             {
                 connection = new MySqlConnection(connection_On);
                 connection.Close();
-
             }
             catch (Exception e)
             {
-
                 connection.Close();
                 throw e;
-
             }
             finally
             {
@@ -86,11 +79,6 @@ namespace Infrastructure.Data
             }
         }
 
-
-
-        public void CreateDatabase() { 
-            
-        }
 
     }
 }
