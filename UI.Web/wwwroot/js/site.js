@@ -1,14 +1,18 @@
 ﻿
 $(document).ready(function () {
-	$('table').DataTable({
+	var table = $('table').DataTable({
 		pageLength: 6,
 		lengthChange: false,
 		dom: 'Bfrtip',
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
-		]
+			'excel' , 'pdf', 'print'
+		],
 	});
-	/*add cart e-comerce*/$(".largeGrid").click(function () {
+	table.buttons().container()
+		.appendTo('#Tb_Product .col-sm-6:eq(0)');
+
+	/*add cart e-comerce*/
+	$(".largeGrid").click(function () {
 		$(this).find('a').addClass('active');
 		$('.smallGrid a').removeClass('active');
 
