@@ -16,6 +16,7 @@ namespace UI.Web
 {
     public class Startup
     {
+        Infrastructure.Data.Conection con = new Infrastructure.Data.Conection();
         HangFireController HangFire_ = new HangFireController();
         public Startup(IConfiguration configuration)
         {
@@ -26,6 +27,7 @@ namespace UI.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            con.Open();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;

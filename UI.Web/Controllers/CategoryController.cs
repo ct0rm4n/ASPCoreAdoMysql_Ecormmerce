@@ -35,7 +35,7 @@ namespace UI.Web.Controllers
                 if (ModelState.IsValid)
                 {                  
 
-                    dao.InserProduct(model);
+                    dao.InserCategory(model);
                     success = true;
                     result = "Cadastrado com sucesso.";
                 }

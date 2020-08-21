@@ -22,6 +22,18 @@
                             <input type="text" name="Name" class="form-control" id="Name" value="@Model.Name" aria-describedby="form-nome">
 
                             <span class="input-group-addon" id="form-nome">Categoria:</span>
+                            <select id="CategoryId" value="@ViewBag.Categoryid" name="CategoryId" class="form-control">
+                                <option value="">-Selecione--</option>
+                                @foreach (var item in ViewBag.Categoryid)
+                                {
+                                    if (item.CategoryId = Model.CategoryId)
+                                    {
+                                        <option selected value="@item.CategoryId">@item.Name</option>
+                                    }
+                                    <option value="@item.CategoryId">@item.Name</option>
+                                }
+
+                            </select>
                             <input id="CategoryId" name="CategoryId" value="@Model.CategoryId" class="form-control">
                         </div>
 

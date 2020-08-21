@@ -40,6 +40,8 @@ namespace UI.Web.Controllers
         [HttpGet("Product/Add")]
         public ActionResult Add()
         {
+            Infrastructure.Repository.CategoryDao daoCategory = new Infrastructure.Repository.CategoryDao();
+            ViewBag.Categoryid = daoCategory.Convert_To_ViewModel_Readings(daoCategory.GetCategory());
             return View();
         }
 
@@ -94,10 +96,10 @@ namespace UI.Web.Controllers
 
         [HttpGet("Product/Edit/{Id}")]
         public ActionResult Edit(int Id)
-        {            
-
+        {
+            Infrastructure.Repository.CategoryDao daoCategory = new Infrastructure.Repository.CategoryDao();
             ProductViewModel model = (ProductViewModel)dao.Convert_To_ViewModel(dao.GetProductById(Id));
-
+            ViewBag.Categoryid = daoCategory.Convert_To_ViewModel_Readings(daoCategory.GetCategory());
             return View(model);
         }
 

@@ -10,12 +10,12 @@ namespace Infrastructure.Repository
 {
     public class CategoryDao : Conection
     {
-        public void InserProduct(CategoryViewModel product)
+        public void InserCategory(CategoryViewModel product)
         {
             string day = DateTime.Now.ToString("yyyy-MM-dd");
             string CommandText = "INSERT INTO challenge.Category" +
                 "(`Name`, `Description`,`Delete`)" +
-                "VALUES('" + product.Name + "', '" + product.Description + "');";
+                "VALUES('" + product.Name + "', '" + product.Description + "',0);";
             Open();
             try
             {
@@ -78,7 +78,7 @@ namespace Infrastructure.Repository
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT `ProductId`, `Name`, `CategoryId`, `Stock`, `Value`, `Description`,`Delete`,`Avatar`  FROM challenge.Product";
+                    cmd.CommandText = "SELECT `CategoryId`, `Name`, `Description`,`Delete` FROM challenge.Category";
                     var dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     Close();
                     var dataTable = new DataTable();

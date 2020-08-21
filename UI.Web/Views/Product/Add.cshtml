@@ -8,7 +8,7 @@
         <form asp-formhelper="true" id="Create" enctype="multipart/form-data" asp-controller="Product" asp-action="Add">
 
             <fieldset>
-                <h2><i class="glyphicon glyphicon-plus">&nbsp;</i>Novo prodruto</h2>
+                <h2><i class="glyphicon glyphicon-plus">&nbsp;</i>Nova categoria</h2>
                 <div id="result">
                     <div class="alert alert-success" role="alert">
                         <i class="fa fa-info-circle">&nbsp;</i>Caso não tenha categoria desejada clique <a>aqui</a>.
@@ -22,7 +22,15 @@
                             <input type="text" name="Name" class="form-control" id="Name" aria-describedby="form-nome">
 
                             <span class="input-group-addon" id="form-nome">Categoria:</span>
-                            <input id="CategoryId" name="CategoryId" class="form-control">
+                            <select id="CategoryId" value="@ViewBag.Categoryid" name="CategoryId" class="form-control">
+                                <option value="">-Selecione--</option>
+                                @foreach (var item in ViewBag.Categoryid)
+                                {
+
+                                    <option value="@item.CategoryId">@item.Name</option>
+                                }
+
+                            </select>
                         </div>
 
                     </div>
