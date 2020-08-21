@@ -23,13 +23,14 @@ namespace UI.Web.Controllers
             _appEnvironment = env;
         }
 
-        [HttpGet("Product/", Name = "Index")]
+        [HttpGet("Product/Index", Name = "Index")]
         public IActionResult Index()
         {
             ViewBag.Products = dao.Convert_To_ViewModel_Readings(dao.GetProducts());
 
             return View();
         }
+
         [HttpGet("Product/Market")]
         public IActionResult Market()
         {
@@ -41,6 +42,7 @@ namespace UI.Web.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [Route("Product/Add_/")]
         public async Task<JsonResult> Add_(ProductViewModel model)
@@ -89,7 +91,8 @@ namespace UI.Web.Controllers
             }
             return Json(new { success = success, message = result });            
         }
-        [NonAction]
+
+        [HttpGet("Product/Edit/{Id}")]
         public ActionResult Edit(int Id)
         {            
 
@@ -97,8 +100,9 @@ namespace UI.Web.Controllers
 
             return View(model);
         }
-        [HttpPost("Edit/{model}")]
-        public async Task<JsonResult> Edit(ProductViewModel model)
+
+        [HttpPost("Product/Edit_/")]
+        public async Task<JsonResult> Edit_(ProductViewModel model)
         {
             var errors = new List<string>();
             var result = "";
@@ -143,7 +147,8 @@ namespace UI.Web.Controllers
 
             return Json(new { success = success, message = result });
         }
-        [HttpPut("Remove/{model}")]
+
+        [HttpGet("Product/Remove/{Id}")]
         public ActionResult Remove(int Id)
         {
             //Open in modal bootstrap with insert form
@@ -152,9 +157,9 @@ namespace UI.Web.Controllers
             ProductViewModel model = (ProductViewModel)dao.Convert_To_ViewModel(dao.GetProductById(Id));
             return View(model);
         }
-        
-        [NonAction]
-        public async Task<JsonResult> Remove(ProductViewModel model)
+
+        [HttpPost("Product/Remove_/")]
+        public async Task<JsonResult> Remove_(ProductViewModel model)
         {
             var errors = new List<string>();
             var result = "";

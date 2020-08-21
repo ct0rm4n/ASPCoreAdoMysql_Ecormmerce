@@ -7,7 +7,7 @@
 
 <div id="ResultG"></div>
 
-<a class="btn btn-default" onclick="Insert()" id="GridButtons"><i class="fa fa-plus" aria-hidden="true">&nbsp;</i>Novo</a><a class="btn btn-default"><i class="fa fa-list-alt" aria-hidden="true">&nbsp;</i>Categorias</a><a onclick="ExportToPDF()"><i>&nbsp;</i>Para PDF</a>
+<a class="btn btn-default" onclick="Insert()" id="GridButtons"><i class="fa fa-plus" aria-hidden="true">&nbsp;</i>Novo</a><a class="btn btn-default"  href="@Url.Action("Index", "Category")"><i class="fa fa-list-alt" aria-hidden="true">&nbsp;</i>Categorias</a><a class="btn btn-default" onclick="ExportToPDF()"><i>&nbsp;</i>Para PDF</a>
 <br />
 <table id="Tb_Users" class="table">
     <thead>
@@ -26,9 +26,12 @@
         @foreach (var item in ViewBag.Products)
         {
         <tr>
-            <td>
-
-                @if (item.Stock == null || item.Stock == 0)
+            <td align="center">
+                @if(item.Delete == true)
+                {
+                    <span class="badge badge-danger" style="color: white; background-color: grey;" title="Este produto não irá aparecer na loja">Inativo</span>
+                }
+                else if (item.Stock == null || item.Stock == 0)
                 {
                     <span class="badge badge-danger" style="color: white; background-color: red;">Esgotado</span>
                 }

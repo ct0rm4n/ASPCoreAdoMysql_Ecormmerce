@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="Legenda_Cadastro" align="center"><h1><i class="fa fa-list-alt">&nbsp;</i>Controle de categorias</h1></div>
+
+<div id="ResultG"></div>
+
+<a class="btn btn-default" onclick="InsertCat()" id="GridButtons"><i class="fa fa-plus" aria-hidden="true">&nbsp;</i>Novo</a><a class="btn btn-default" href="@Url.Action("Index", "Product")"><i class="fa fa-cogs" aria-hidden="true">&nbsp;</i>Produtos</a><a class="btn btn-default" onclick="ExportToPDF()"><i>&nbsp;</i>Para PDF</a>
+<br />
+<table id="Tb_Users" class="table">
+    <thead>
+        <tr>
+            
+            <th>Nome</th>
+            <th>Descrição</th>            
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Categorys)
+        {
+            <tr>
+                
+                <td>@item.Name</td>
+
+                <td>@item.Description</td>
+
+
+                <td>
+
+                    <a title="Visualizar"><i class="fa fa-low-vision fa-2x"></i></a>
+                    <a title="Editar" onclick="Edit(@item.CategoryId)"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                    <a title="Remover" onclick="Remove(@item.CategoryId)"><i class="fa fa-times fa-2x"></i></a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

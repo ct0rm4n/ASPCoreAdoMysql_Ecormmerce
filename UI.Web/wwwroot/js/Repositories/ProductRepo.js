@@ -52,11 +52,20 @@ function Edit_Dao() {
     formData.append('Stock', $('#Stock').val());
     $.ajax({
         type: "Post",
-        url: "Product/Edit/",
-        data: formData,
-        processData: false, 
+        url: "../Product/Edit_/",
+        processData: false,
         contentType: false,
-        success: function (data) {
+        data: formData,
+        type: "post",
+        dataType: "json",
+        beforeSend: function (XMLHttpRequest) {
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $('#result').html("<div class='alert alert-danger col-lg-10' align='left'><i class='glyphicon glyphicon-exclamation-sign'>&nbsp;</i><span>Ocorreu um erro na validação - </span>" + data.message + "</br></br></div>");
+            console.log("XMLHttpRequest:" + XMLHttpRequest + "textStatus" + textStatus + "errorThrown" + errorThrown)
+        },
+        success: function (data, textStatus, XMLHttpRequest) {
             if (data.success == true) {
                 $('#result').html("<div class='alert alert-info col-lg-10' align='left'><i class='glyphicon glyphicon-exclamation-sign'>&nbsp;</i><span>Editado com sucesso - </span>" + data.message + "</br></br></div>");
                 setTimeout(function () {
@@ -82,11 +91,20 @@ function Remove_Dao() {
     
     $.ajax({
         type: "Post",
-        url: "Product/Remove/",
-        data: formData,
-        processData: false,  // tell jQuery not to process the data
+        url: "../Product/Remove_/",
+        processData: false,
         contentType: false,
-        success: function (data) {
+        data: formData,
+        type: "post",
+        dataType: "json",
+        beforeSend: function (XMLHttpRequest) {
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $('#result').html("<div class='alert alert-danger col-lg-10' align='left'><i class='glyphicon glyphicon-exclamation-sign'>&nbsp;</i><span>Ocorreu um erro na validação - </span>" + data.message + "</br></br></div>");
+            console.log("XMLHttpRequest:" + XMLHttpRequest + "textStatus" + textStatus + "errorThrown" + errorThrown)
+        },
+        success: function (data, textStatus, XMLHttpRequest) {
             if (data.success == true) {
                 $('#result').html("<div class='alert alert-info col-lg-10' align='left'><i class='glyphicon glyphicon-exclamation-sign'>&nbsp;</i><span>Removido - </span>" + data.message + "</br></br></div>");
                 setTimeout(function () {
