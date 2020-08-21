@@ -51,7 +51,7 @@ namespace Infrastructure.Repository
             var day = DateTime.UtcNow.ToString();
             string CommandText = "INSERT INTO challenge.User" +
                 "(`Name`, `LastName`, `Email`, `Password`, `CurosId`,`Delete`,`Dt_Reg`,`Celular`,`Cpf`,`Cep`,`Rua`,`Complemento`,`Bairro`,`N`,`Es`,`Cidade`)" +
-                "VALUES('" + user.UserName + "', '" + user.LastName + "','" + user.Email + "','" + MD5Generate(user.Password) + "', 1, 0,'" + day + "','" + user.Celular + "','" + user.Cpf + "','" + user.Cep + "','" + user.Rua + "','" + user.Complemento + "','" + user.Bairro + "','" + user.N + "','" + user.Es + "','" + user.Cidade + "');";
+                "VALUES('" + user.UserName + "', '" + user.LastName + "','" + user.Email + "','" + PassGenerate(user.Password) + "', 1, 0,'" + day + "','" + user.Celular + "','" + user.Cpf + "','" + user.Cep + "','" + user.Rua + "','" + user.Complemento + "','" + user.Bairro + "','" + user.N + "','" + user.Es + "','" + user.Cidade + "');";
             Open();
             try
             {
@@ -68,7 +68,7 @@ namespace Infrastructure.Repository
 
         public bool LoginUser(string email, string password)
         {
-            string CommandText = "SELECT * FROM data_ead.User WHERE Email='" + email + "'AND Password='" + MD5Generate(password) + "'";
+            string CommandText = "SELECT * FROM data_ead.User WHERE Email='" + email + "'AND Password='" + PassGenerate(password) + "'";
             Open();
             try
             {
