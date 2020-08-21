@@ -43,6 +43,7 @@ function Edit_Dao() {
     var create = $("#Edit").serialize();
     console.log(create);
     var formData = new FormData();
+    console.log(formData);
     formData.append('file', $('#file')[0].files[0]); 
     formData.append('Name', $('#Name').val());
     formData.append('Value', $('#Value').val());
@@ -50,6 +51,7 @@ function Edit_Dao() {
     formData.append('ProductId', $('#ProductId').val());
     formData.append('CategoryId', $('#CategoryId').val());
     formData.append('Stock', $('#Stock').val());
+    formData.append('Avatar', $('#Avatar').val());
     $.ajax({
         type: "Post",
         url: "../Product/Edit_/",

@@ -26,15 +26,19 @@
                                 <option value="">-Selecione--</option>
                                 @foreach (var item in ViewBag.Categoryid)
                                 {
-                                    if (item.CategoryId = Model.CategoryId)
+                                    if (item.CategoryId == Model.CategoryId)
                                     {
                                         <option selected value="@item.CategoryId">@item.Name</option>
                                     }
-                                    <option value="@item.CategoryId">@item.Name</option>
+                                    else
+                                    {
+                                        <option value="@item.CategoryId">@item.Name</option>
+                                    }
+
                                 }
 
                             </select>
-                            <input id="CategoryId" name="CategoryId" value="@Model.CategoryId" class="form-control">
+                            
                         </div>
 
                     </div>
@@ -61,8 +65,9 @@
                     <div class=" btn-toolbar" role="toolbar">
                         <br />
                         <div class="input-group">
+                            <input style="display:none" id="Avatar" name="Avatar" value="@Model.Avatar"/>
                             <span class="input-group-addon" id="form-nome">Imagem</span>
-                            <input type="file" class="form-control" id="file" name="file" placeholder="Upload of avatar" required>
+                            <input type="file" class="form-control"  id="file" name="file" placeholder="Upload of avatar" required>
 
                         </div>
                     </div>

@@ -20,7 +20,7 @@ namespace Infrastructure.Repository
             try
             {
                 MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
-                //run query
+
                 myCommand.ExecuteNonQuery();                
             }
             catch (MySqlException e)
@@ -29,7 +29,6 @@ namespace Infrastructure.Repository
             }
 
         }
-        //post to edit product afeter isert img in ~/images/ProductName/ProductName_0.png
         public void EditProduct(ProductViewModel product)
         {
             string day = DateTime.Now.ToString("yyyy-MM-dd");
@@ -40,7 +39,6 @@ namespace Infrastructure.Repository
             try
             {
                 MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
-                //run query
                 myCommand.ExecuteNonQuery();
             }
             catch (MySqlException e)
@@ -59,7 +57,7 @@ namespace Infrastructure.Repository
             try
             {
                 MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
-                //run query
+
                 myCommand.ExecuteNonQuery();
             }
             catch (MySqlException e)
@@ -68,12 +66,11 @@ namespace Infrastructure.Repository
             }
 
         }
-        //return all products
+
         public DataTable GetProducts()
         {
-            //LIST ALL product of database to a datatable
+            
             Open();
-            string day = DateTime.Now.ToString("yyyy-MM-dd");
             try
             {
                 using (var cmd = new MySqlCommand())
@@ -95,12 +92,10 @@ namespace Infrastructure.Repository
                 return dataTable;
             }
         }
-        //GetProductBy id - Used in Backend Grid
+
         public DataTable GetProductById(int Id)
         {
-            //LIST ALL product of database to a datatable
             Open();
-            string day = DateTime.Now.ToString("yyyy-MM-dd");
             try
             {
                 using (var cmd = new MySqlCommand())
@@ -122,7 +117,7 @@ namespace Infrastructure.Repository
                 return dataTable;
             }
         }
-        //Convert mult rows and single record to viewbag 
+
         public IEnumerable<object> Convert_To_ViewModel_Readings(DataTable dataTable)
         {
             //Converto datatbale to readings viewmodels in html

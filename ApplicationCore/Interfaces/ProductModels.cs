@@ -21,6 +21,7 @@ namespace ApplicationCore.Interfaces
         public int Stock { get; set; }
         public bool Delete { get; set; }
         public virtual List<IFormFile> file { get; set; }
+        public virtual string Category { get; set; }
         
     }
     

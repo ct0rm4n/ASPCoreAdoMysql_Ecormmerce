@@ -12,8 +12,6 @@
     </div>
 
     <div id="info">
-        <p class="i1">Add to cart interaction prototype by Virgil Pana</p>
-        <p>    Follow me on <a href="https://dribbble.com/virgilpana" style="color:#ea4c89" target="_blank">Dribbble</a> | <a style="color:#2aa9e0" href="https://twitter.com/virgil_pana" target="_blank">Twitter</a></p>
     </div>
 
     <div id="header">
@@ -93,11 +91,17 @@
                 <li class="smallGrid"><a class="active" href=""></a></li>
             </ul>
         </div>
-
-        Showing 1–9 of 48 results
+        @{
+            var count = 0;
+            if (Enumerable.Count(ViewBag.Products) > 0)
+            {
+                     count = Enumerable.Count(ViewBag.Products);
+            }
+        }
+        Exibindo 1–@count de @count resultados
     </div>
 
-    <div id="grid">
+    <div id="grid" style="padding-top:50px;">
         @foreach (var item in ViewBag.Products)
         {
             <div class="product">
