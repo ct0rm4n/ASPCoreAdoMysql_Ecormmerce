@@ -57,7 +57,7 @@ namespace Infrastructure.Data
             }
             finally
             {
-
+                connection.Close();
             }
         }
 
