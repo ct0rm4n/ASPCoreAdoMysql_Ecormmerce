@@ -125,6 +125,8 @@ $(document).ready(function () {
 			var position = $(img).offset();
 
 			var productName = $(this).parent().find('h4').get(0).innerHTML;
+			var productValue = $(this).parent().find('.Productvalue').get(0).innerHTML;
+
 
 			$("body").append('<div class="floating-cart"></div>');
 			var cart = $('div.floating-cart');
@@ -138,7 +140,7 @@ $(document).ready(function () {
 				$("body").removeClass("MakeFloatingCart");
 
 
-				var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='" + img.src + "' alt='' /></div><span>" + productName + "</span><strong>$39</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
+				var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='" + img.src + "' alt='' /></div><span>" + productName + "</span><strong>" + productValue+"</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
 
 				$("#cart .empty").hide();
 				$("#cart").append(cartItem);
@@ -240,6 +242,7 @@ $(document).ready(function () {
 		var position = productCard.offset();
 		var productImage = $(productCard).find('img').get(0).src;
 		var productName = $(productCard).find('.product_name').get(0).innerHTML;
+		var productValue = $(productCard).find('.product_price').get(0).innerHTML;
 
 		$("body").append('<div class="floating-cart"></div>');
 		var cart = $('div.floating-cart');
@@ -251,7 +254,7 @@ $(document).ready(function () {
 			$("body").removeClass("MakeFloatingCart");
 
 
-			var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='" + productImage + "' alt='' /></div><span>" + productName + "</span><strong>$39</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
+			var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='" + productImage + "' alt='' /></div><span>" + productName + "</span><strong>" + productValue+"</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
 
 			$("#cart .empty").hide();
 			$("#cart").append(cartItem);
