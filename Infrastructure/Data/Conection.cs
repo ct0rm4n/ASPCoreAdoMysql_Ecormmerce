@@ -48,16 +48,14 @@ namespace Infrastructure.Data
                 MySqlConnection connection_db = new MySqlConnection("Server=localhost; Port=3306; User Id=root;Pwd=xxxv3265;");
                 MySql.Data.MySqlClient.MySqlCommand myCommandCreateDb = new MySql.Data.MySqlClient.MySqlCommand(database, connection_db);
                 connection.Open();
-                myCommandCreateDb.ExecuteNonQuery();
-                
+                myCommandCreateDb.ExecuteNonQuery();                
                 connection.Close();
                 Open();
                 throw e;
-
             }
             finally
             {
-                connection.Close();
+
             }
         }
 

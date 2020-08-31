@@ -26,9 +26,8 @@ namespace UI.Web.Controllers
         [HttpGet("Product/Index", Name = "Index")]
         public IActionResult Index()
         {
-            Infrastructure.Repository.CategoryDao daoCategory = new Infrastructure.Repository.CategoryDao();
             ViewBag.Products = dao.ConvertToViewModelReadings(dao.GetProducts());
-            ViewBag.Category= daoCategory.ConvertToViewModelReadings(daoCategory.GetCategory());
+
             return View();
         }
 

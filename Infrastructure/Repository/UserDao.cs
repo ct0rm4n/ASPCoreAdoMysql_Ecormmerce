@@ -68,7 +68,7 @@ namespace Infrastructure.Repository
 
         public bool LoginUser(string email, string password)
         {
-            string CommandText = "SELECT * FROM data_ead.User WHERE Email='" + email + "'AND Password='" + PassGenerate(password) + "'";
+            string CommandText = "SELECT * FROM challenge.User WHERE Email='" + email + "'AND Password='" + PassGenerate(password) + "'";
             Open();
             try
             {

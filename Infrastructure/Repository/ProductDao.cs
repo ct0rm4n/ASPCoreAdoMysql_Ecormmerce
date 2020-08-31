@@ -75,7 +75,7 @@ namespace Infrastructure.Repository
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT `ProductId`, `Name`, `CategoryId`, `Stock`, `Value`, `Description`,`Delete`,`Avatar`  FROM challenge.Product";
+                    cmd.CommandText = "SELECT `ProductId`, p.`Name`, c.`CategoryId`, `Stock`, `Value`, c.`Description` as Category, p.`Description`,p.`Delete`,`Avatar` FROM challenge.Product as p INNER JOIN challenge.Category as c on c.CategoryId = p.CategoryId";
                     var dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     Close();
                     var dataTable = new DataTable();
@@ -125,6 +125,7 @@ namespace Infrastructure.Repository
                     ProductId = Convert.ToInt32(row["ProductId"]),
                     Name = Convert.ToString(row["Name"]) ,
                     CategoryId = Convert.ToInt32(row["CategoryId"]),
+                    Category = Convert.ToString(row["Category"]),
                     Stock = Convert.ToInt32(row["Stock"]),
                     Value = Convert.ToDouble(row["Value"]),
                     Description = Convert.ToString(row["Description"]),
@@ -144,6 +145,7 @@ namespace Infrastructure.Repository
                     ProductId = Convert.ToInt32(row["ProductId"]),
                     Name = Convert.ToString(row["Name"]),
                     CategoryId = Convert.ToInt32(row["CategoryId"]),
+                    Category = Convert.ToString(row["Category"]),
                     Stock = Convert.ToInt32(row["Stock"]),
                     Value = Convert.ToDouble(row["Value"]),
                     Description = Convert.ToString(row["Description"]),

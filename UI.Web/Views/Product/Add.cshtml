@@ -16,22 +16,82 @@
                 </div>
 
                 <div class="btn-toolbar" role="toolbar">
-                    <div class="row col-lg-12">
+                    <div class="row col-lg-12 container">
+                        
                         <div class="input-group">
                             <span class="input-group-addon" id="form-nome">Nome</span>
                             <input type="text" name="Name" class="form-control" id="Name" aria-describedby="form-nome">
 
-                            <span class="input-group-addon" id="form-nome">Categoria:</span>
-                            <select id="CategoryId" value="@ViewBag.Categoryid" name="CategoryId" class="form-control">
-                                <option value="">-Selecione--</option>
+                            <span class="input-group-addon" id="form-category">Categoria:</span>
+                            
+                            <input id="Category_List" class="form-control"/>
+                            <select style="display: none" class="form-control" id="CategoryId" aria-describedby="form-category" value="@ViewBag.Categoryid" name="CategoryId" multiple>
+
                                 @foreach (var item in ViewBag.Categoryid)
                                 {
 
                                     <option value="@item.CategoryId">@item.Name</option>
                                 }
-
                             </select>
-                        </div>
+                            <span class="input-group-addon" id="form-category"><i class="fa fa-plus">&nbsp;</i></span>
+
+                                <script>
+
+                                    $(document).ready(function () {
+                                        
+                                        
+                                        var mySource = [];
+                                        $("#CategoryId").children("option").map(function () {
+                                            mySource.push($(this).text());
+                                        });
+                                        console.log("Autocomplete:.." + mySource)
+                                        $("#Category_List").autocomplete({
+                                            source: function (request, response) {
+                                                var term = request.term;
+
+                                                // substring of new string (only when a comma is in string)
+                                                if (term.indexOf(', ') > 0) {
+                                                    var index = term.lastIndexOf(', ');
+                                                    term = term.substring(index + 2);
+                                                }
+
+                                                // regex to match string entered with start of suggestion strings
+                                                var re = $.ui.autocomplete.escapeRegex(term);
+                                                var matcher = new RegExp('^' + re, 'i');
+                                                var regex_validated_array = $.grep(mySource, function (item, index) {
+                                                    return matcher.test(item);
+                                                });
+
+                                                // pass array `regex_validated_array ` to the response and 
+                                                // `extractLast()` which takes care of the comma separation
+
+                                                response($.ui.autocomplete.filter(regex_validated_array,
+                                                    extractLast(term)));
+                                            },
+                                            minLength: 2,
+                                            multiple: true,
+                                            focus: function () {
+                                                return false;
+                                            },
+                                            select: function (event, ui) {
+                                                var terms = split(this.value);
+                                                terms.pop();
+                                                terms.push(ui.item.value);
+                                                terms.push('');
+                                                this.value = terms.join(', ');
+                                                return false;
+                                            }
+                                        });
+                                        function split(val) {
+                                            return val.split(/,\s*/);
+                                        }
+
+                                        function extractLast(term) {
+                                            return split(term).pop();
+                                        }
+                                    })
+                                </script>
+                            </div>
 
                     </div>
                 </div>
@@ -48,22 +108,73 @@
 
                     </div>
                 </div>
+
                 <br />
                 <div class="row col-lg-10">
-                    <textarea rows="4" type="text" class="form-control" id="Description" name="Description" placeholder="Descrição" required></textarea>
+                    <textarea rows="4" type="text" class="form-control" id="Description" name="Description" placeholder="Descrição do produto" required></textarea>
+                    <br />
                 </div>
                 <br />
-                <div class="row col-lg-6">
-                    <div class=" btn-toolbar" role="toolbar">
-                        <br />
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-8">
                         <div class="input-group">
-                            <span class="input-group-addon" id="form-nome">Imagem</span>
-                            <input type="file" class="form-control" id="file" name="file" placeholder="Upload of avatar" required>
+                            <span class="input-group-addon" id="form-nome"><i class="fa fa-info-circle">&nbsp;</i>-<i class="fa fa-address-card">&nbsp;</i>&nbsp;Fornecedor?</span>
+                            <input type="text" name="Value" class="form-control" id="Value" aria-describedby="form-value">                            
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-value">Contato</span>
+                            <span class="input-group-addon" id="form-value"><i class="fa fa-envelope">&nbsp;</i>E-mail</span>
+                            <input id="Email" name="Email" class="form-control">
+
+                            <span class="input-group-addon" id="form-value"><i class="fa fa-phone">&nbsp;</i>Telefone</span>
+                            <input id="Phone" name="Phone" class="form-control">
+
+                            <span class="input-group-addon" id="form-value"><i class="fa fa-plus"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-8">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-promocao">Promocinal?&nbsp;<input type="checkbox" onchange="PromotionalOn()" name="Promocao" id="Promocao" aria-describedby="form-promocao" />&nbsp;Sim</span>
+
+                            <span class="input-group-addon" id="form-value">Preço</span>
+                            <input disabled id="PromotionValue" name="PromotionValue" aria-describedby="form-promocao" class="form-control">
 
                         </div>
                     </div>
                 </div>
+                <br />
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-value">Dê</span>
+                            <input disabled id="Begin" name="PromocaoInicio" type="date" value="@DateTime.Now" aria-describedby="form-promocao" class="form-control">
+                            <span class="input-group-addon" id="form-value">Até</span>
+                            <input disabled id="End" name="PromocaoFim" type="date" aria-describedby="form-promocao" class="form-control">
+                        </div>
+                    </div>
 
+                </div>
+
+                <div class="row col-lg-6">
+                    <div class=" btn-toolbar" role="toolbar">
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon" id="form-nome"><i class="fa fa-file-image-o">&nbsp;</i>Imagem</span>
+                            <input type="file" class="form-control" id="file" name="file" placeholder="Upload of avatar" required>
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
             </fieldset>
             <hr />
             <div class="row" align="center">

@@ -83,8 +83,10 @@ namespace UI.Web
             get
             {
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+
                 var apiDocFile = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
                 var apiPath = Path.Combine(basePath, apiDocFile);
+
                 return new[] { apiPath };
 
             }
