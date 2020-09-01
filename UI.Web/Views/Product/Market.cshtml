@@ -38,12 +38,33 @@
         <div id="checkout">
             CHECKOUT
         </div>
-
-        <div id="info">
-            
+        <div id="tougle">
+            <i class="fa fa-angle-double-left" onclick="alert('esconde menu')"></i>
         </div>
+        <div id="info">
+            <div>
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="row col-lg-8">
+                        <div class="input-group">
 
-        <div id="header">
+                            <input id="Search" name="Search" class="form-control">
+
+                            <div class="input-group-addon" id="form-value">
+                                <i class="fa fa-search" onclick="alert('post search..')"></i>&nbsp;
+
+
+                                <i class="fa fa-angle-double-down" onclick="alert('pesquisa avançada')"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="header" style="        height: 92px;
+        background: @ViewBag.Thema.NavBarColor;
+        border-bottom: 1px solid #eee;
+        font-family: @ViewBag.Thema.FontFamily;">
             <ul>
                 <li><a href="">Inicio</a></li>
                 <li><a href="">Sobre</a></li>
@@ -52,7 +73,8 @@
             </ul>
         </div>
 
-        <div id="sidebar">
+
+        <div id="sidebar" style="background: @ViewBag.Thema.SideBarColor;">
             <h3>CART</h3>
             <div id="cart">
                 <span class="empty">No items in cart.</span>
@@ -128,107 +150,107 @@
             @foreach (var item in ViewBag.Products)
             {
                 <div class="product">
-                <div class="info-large">
-                    <h4>@item.Name</h4>
-                    <div class="sku">
-                        PRODUCT COD: <strong>@item.ProductId</strong>
+                    <div class="info-large">
+                        <h4>@item.Name</h4>
+                        <div class="sku">
+                            PRODUCT COD: <strong>@item.ProductId</strong>
+                        </div>
+
+                        <div class="price-big">
+                            <span>$ @item.Value</span> $ @item.Value <!--Preço normal e preço promocional-->
+                        </div>
+
+                        <h3>Cores</h3>
+                        <div class="colors-large">
+                            <ul>
+                                <li><a href="" style="background:#222"><span></span></a></li>
+                                <li><a href="" style="background:#6e8cd5"><span></span></a></li>
+                                <li><a href="" style="background:#f56060"><span></span></a></li>
+                                <li><a href="" style="background:#44c28d"><span></span></a></li>
+                            </ul>
+                        </div>
+
+                        <h3>Tamanhos</h3>
+                        <div class="sizes-large">
+                            <span>XS</span>
+                            <span>S</span>
+                            <span>M</span>
+                            <span>L</span>
+                            <span>XL</span>
+                            <span>XXL</span>
+                        </div>
+
+                        <button class="add-cart-large">Adicionar ao carrinho</button>
+
                     </div>
+                    <div class="make3D">
+                        <div class="product-front">
+                            <div class="shadow"></div>
+                            @if (item.Avatar == null || item.Avatar == "")
+                            {
+                                <img src="/images/unnamed.jpg" />
+                            }
+                            else
+                            {
+                                <img src="@item.Avatar" />
+                            }
+                            <div class="image_overlay"></div>
+                            <div class="add_to_cart">Add to cart</div>
+                            <div class="view_gallery">Ver fotos</div>
+                            <div class="stats">
+                                <div class="stats-container">
+                                    <span class="product_price">$@item.Value</span>
+                                    <span class="product_name">@item.Name</span>
+                                    <p>@item.Description</p>
 
-                    <div class="price-big">
-                        <span >$ @item.Value</span> $ @item.Value <!--Preço normal e preço promocional-->
-                    </div>
-
-                    <h3>Cores</h3>
-                    <div class="colors-large">
-                        <ul>
-                            <li><a href="" style="background:#222"><span></span></a></li>
-                            <li><a href="" style="background:#6e8cd5"><span></span></a></li>
-                            <li><a href="" style="background:#f56060"><span></span></a></li>
-                            <li><a href="" style="background:#44c28d"><span></span></a></li>
-                        </ul>
-                    </div>
-
-                    <h3>Tamanhos</h3>
-                    <div class="sizes-large">
-                        <span>XS</span>
-                        <span>S</span>
-                        <span>M</span>
-                        <span>L</span>
-                        <span>XL</span>
-                        <span>XXL</span>
-                    </div>
-
-                    <button class="add-cart-large">Adicionar ao carrinho</button>
-
-                </div>
-                <div class="make3D">
-                    <div class="product-front">
-                        <div class="shadow"></div>
-                        @if (item.Avatar == null || item.Avatar == "")
-                        {
-                            <img src="/images/unnamed.jpg"  />
-                        }
-                        else
-                        {
-                            <img src="@item.Avatar"  />
-                        }
-                        <div class="image_overlay"></div>
-                        <div class="add_to_cart">Add to cart</div>
-                        <div class="view_gallery">Ver fotos</div>
-                        <div class="stats">
-                            <div class="stats-container">
-                                <span class="product_price">$@item.Value</span>
-                                <span class="product_name">@item.Name</span>
-                                <p>@item.Description</p>
-
-                                <div class="product-options">
-                                    <strong>SIZES</strong>
-                                    <span>XS, S, M, L, XL, XXL</span>
-                                    <strong>COLORS</strong>
-                                    <div class="colors">
-                                        <div class="c-blue"><span></span></div>
-                                        <div class="c-red"><span></span></div>
-                                        <div class="c-white"><span></span></div>
-                                        <div class="c-green"><span></span></div>
+                                    <div class="product-options">
+                                        <strong>SIZES</strong>
+                                        <span>XS, S, M, L, XL, XXL</span>
+                                        <strong>COLORS</strong>
+                                        <div class="colors">
+                                            <div class="c-blue"><span></span></div>
+                                            <div class="c-red"><span></span></div>
+                                            <div class="c-white"><span></span></div>
+                                            <div class="c-green"><span></span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="product-back">
-                        <div class="shadow"></div>
-                        <div class="carousel">
-                            <ul class="carousel-container">
-                                @if (item.Avatar == null || item.Avatar == "")
-                                {
-                                    <li><img src="/images/unnamed.jpg" width="300px" /></li>
-                                }
-                                else
-                                {
-                                    <li><img src="@item.Avatar" width="300px" /></li>
-                                }                                
-                            </ul>
-                            <div class="arrows-perspective">
-                                <div class="carouselPrev">
-                                    <div class="y"></div>
-                                    <div class="x"></div>
-                                </div>
-                                <div class="carouselNext">
-                                    <div class="y"></div>
-                                    <div class="x"></div>
+                        <div class="product-back">
+                            <div class="shadow"></div>
+                            <div class="carousel">
+                                <ul class="carousel-container">
+                                    @if (item.Avatar == null || item.Avatar == "")
+                                    {
+                                        <li><img src="/images/unnamed.jpg" width="300px" /></li>
+                                    }
+                                    else
+                                    {
+                                        <li><img src="@item.Avatar" width="300px" /></li>
+                                    }
+                                </ul>
+                                <div class="arrows-perspective">
+                                    <div class="carouselPrev">
+                                        <div class="y"></div>
+                                        <div class="x"></div>
+                                    </div>
+                                    <div class="carouselNext">
+                                        <div class="y"></div>
+                                        <div class="x"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="flip-back">
-                            <div class="cy"></div>
-                            <div class="cx"></div>
+                            <div class="flip-back">
+                                <div class="cy"></div>
+                                <div class="cx"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            }            
+            }
         </div>
     </div>
     <div class="wrapper">

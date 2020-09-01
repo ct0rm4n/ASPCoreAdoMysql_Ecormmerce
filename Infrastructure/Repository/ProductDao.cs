@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
     public class ProductDao : Conection
     {
-        public void InserProduct(ProductViewModel product)
+        public async Task<bool> InserProduct(ProductViewModel product)
         {
             string CommandText = "INSERT INTO challenge.Product" +
                 "(`Name`, `CategoryId`, `Stock`, `Description`,`Value`,`Delete`,`Avatar`)" +
@@ -20,15 +21,17 @@ namespace Infrastructure.Repository
             {
                 MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
 
-                myCommand.ExecuteNonQuery();                
+                myCommand.ExecuteNonQuery();
+                return true;
             }
             catch (MySqlException e)
             {
                 Console.Write(string.Format("Retorn an error ref:" + e));
+                return false;
             }
 
         }
-        public void EditProduct(ProductViewModel product)
+        public async Task<bool> EditProduct(ProductViewModel product)
         {
             string CommandText = "UPDATE challenge.product "+
             "SET `Name`= '"+product.Name+ "', `CategoryId`= " + product.CategoryId + ",`Stock`= " + product.Stock + ", `Description`= '" + product.Description + "', `Value`= "+product.Value+", `Delete`= 0, `Avatar`= '"+product.Avatar+"'" +
@@ -38,15 +41,17 @@ namespace Infrastructure.Repository
             {
                 MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
                 myCommand.ExecuteNonQuery();
+                return true;
             }
             catch (MySqlException e)
             {
                 Console.Write(string.Format("Retorn an error ref:" + e));
+                return false;
             }
 
         }
 
-        public void RemoveProduct(ProductViewModel product)
+        public async Task<bool> RemoveProduct(ProductViewModel product)
         {
             string day = DateTime.Now.ToString("yyyy-MM-dd");
             string CommandText = "UPDATE challenge.product " +
@@ -57,15 +62,17 @@ namespace Infrastructure.Repository
                 MySql.Data.MySqlClient.MySqlCommand myCommand = new MySql.Data.MySqlClient.MySqlCommand(CommandText, connection);
 
                 myCommand.ExecuteNonQuery();
+                return true;
             }
             catch (MySqlException e)
             {
                 Console.Write(string.Format("Retorn an error ref:" + e));
+                return false;
             }
 
         }
 
-        public DataTable GetProducts()
+        public async Task<DataTable> GetProducts()
         {
             
             Open();
@@ -91,7 +98,7 @@ namespace Infrastructure.Repository
             }
         }
 
-        public DataTable GetProductById(int Id)
+        public async Task<DataTable> GetProductById(int Id)
         {
             Open();
             try

@@ -11,7 +11,7 @@
                 <h2><i class="glyphicon glyphicon-plus">&nbsp;</i>Novo produto</h2>
                 <div id="result">
                     <div class="alert alert-success" role="alert">
-                        <i class="fa fa-info-circle">&nbsp;</i>Caso não tenha categoria desejada clique <a>aqui</a>.
+                        <i class="fa fa-info-circle">&nbsp;</i>Mantenha o estoque atualizado, a quantidade do produto vai definir se estará disponível na loja para o cliente.
                     </div>
                 </div>
 
@@ -24,8 +24,8 @@
 
                             <span class="input-group-addon" id="form-category">Categoria:</span>
                             
-                            <input id="Category_List" class="form-control"/>
-                            <select style="display: none" class="form-control" id="CategoryId" aria-describedby="form-category" value="@ViewBag.Categoryid" name="CategoryId" multiple>
+                            
+                            <select class="form-control" id="CategoryId" aria-describedby="form-category" value="@ViewBag.Categoryid" name="CategoryId" multiple>
 
                                 @foreach (var item in ViewBag.Categoryid)
                                 {
@@ -39,56 +39,15 @@
 
                                     $(document).ready(function () {
                                         
+                                        $('#CategoryId').selectpicker({
+                                            maxOptions: 2,
+                                            liveSearch: "true",
+                                            noneResultsText: "Adicione a categoria a direita",
+                                            style: "form-control",
+                                            title: "Selecione a categoria",
+                                            width: 100
+                                        });
                                         
-                                        var mySource = [];
-                                        $("#CategoryId").children("option").map(function () {
-                                            mySource.push($(this).text());
-                                        });
-                                        console.log("Autocomplete:.." + mySource)
-                                        $("#Category_List").autocomplete({
-                                            source: function (request, response) {
-                                                var term = request.term;
-
-                                                // substring of new string (only when a comma is in string)
-                                                if (term.indexOf(', ') > 0) {
-                                                    var index = term.lastIndexOf(', ');
-                                                    term = term.substring(index + 2);
-                                                }
-
-                                                // regex to match string entered with start of suggestion strings
-                                                var re = $.ui.autocomplete.escapeRegex(term);
-                                                var matcher = new RegExp('^' + re, 'i');
-                                                var regex_validated_array = $.grep(mySource, function (item, index) {
-                                                    return matcher.test(item);
-                                                });
-
-                                                // pass array `regex_validated_array ` to the response and 
-                                                // `extractLast()` which takes care of the comma separation
-
-                                                response($.ui.autocomplete.filter(regex_validated_array,
-                                                    extractLast(term)));
-                                            },
-                                            minLength: 2,
-                                            multiple: true,
-                                            focus: function () {
-                                                return false;
-                                            },
-                                            select: function (event, ui) {
-                                                var terms = split(this.value);
-                                                terms.pop();
-                                                terms.push(ui.item.value);
-                                                terms.push('');
-                                                this.value = terms.join(', ');
-                                                return false;
-                                            }
-                                        });
-                                        function split(val) {
-                                            return val.split(/,\s*/);
-                                        }
-
-                                        function extractLast(term) {
-                                            return split(term).pop();
-                                        }
                                     })
                                 </script>
                             </div>

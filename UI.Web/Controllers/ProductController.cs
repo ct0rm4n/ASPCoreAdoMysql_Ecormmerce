@@ -24,21 +24,24 @@ namespace UI.Web.Controllers
         }
 
         [HttpGet("Product/Index", Name = "Index")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewBag.Products = dao.ConvertToViewModelReadings(dao.GetProducts());
+            
+            ViewBag.Products = dao.ConvertToViewModelReadings(await dao.GetProducts());
 
             return View();
         }
 
         [HttpGet("Product/Market")]
-        public IActionResult Market()
+        public async Task<IActionResult> Market()
         {
-            ViewBag.Products = dao.ConvertToViewModelReadings(dao.GetProducts());
+            Infrastructure.Repository.ThemaDao thema = new Infrastructure.Repository.ThemaDao();
+            ViewBag.thema = thema.ConvertToViewModelReadings(await thema.GetThema());
+            ViewBag.Products = dao.ConvertToViewModelReadings(await dao.GetProducts());
             return View();
         }
         [HttpGet("Product/Add")]
-        public ActionResult Add()
+        public async Task<IActionResult> Add()
         {
             Infrastructure.Repository.CategoryDao daoCategory = new Infrastructure.Repository.CategoryDao();
             ViewBag.Categoryid = daoCategory.ConvertToViewModelReadings(daoCategory.GetCategory());
@@ -60,7 +63,7 @@ namespace UI.Web.Controllers
                     {                                         
                         model.Avatar = await InsertFiles(model.file, model.Name);
                     }                    
-                    dao.InserProduct(model);
+                    await dao.InserProduct(model);
                     success = true;
                     result = "Cadastrado com sucesso.";
                 }
@@ -83,14 +86,14 @@ namespace UI.Web.Controllers
             {
                 return Json(new { success = false, message = errors });                
             }
-            return Json(new { success = success, message = result });            
+            return  Json(new { success = success, message = result });            
         }
 
         [HttpGet("Product/Edit/{Id}")]
-        public ActionResult Edit(int Id)
+        public async Task<ActionResult> Edit(int Id)
         {
             Infrastructure.Repository.CategoryDao daoCategory = new Infrastructure.Repository.CategoryDao();
-            ProductViewModel model = (ProductViewModel)dao.ConvertToViewModel(dao.GetProductById(Id));
+            ProductViewModel model = (ProductViewModel)dao.ConvertToViewModel(await dao.GetProductById(Id));
             ViewBag.Categoryid = daoCategory.ConvertToViewModelReadings(daoCategory.GetCategory());
             return View(model);
         }
@@ -137,9 +140,9 @@ namespace UI.Web.Controllers
         }
 
         [HttpGet("Product/Remove/{Id}")]
-        public ActionResult Remove(int Id)
+        public async Task<ActionResult> Remove(int Id)
         {
-            ProductViewModel model = (ProductViewModel)dao.ConvertToViewModel(dao.GetProductById(Id));
+            ProductViewModel model = (ProductViewModel)dao.ConvertToViewModel(await dao.GetProductById(Id));
             return View(model);
         }
 

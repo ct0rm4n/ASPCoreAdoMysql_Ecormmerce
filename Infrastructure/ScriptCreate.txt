@@ -19,4 +19,14 @@ CREATE TABLE if not exists `Product` (
     `Delete` BOOLEAN DEFAULT '0', 
     UNIQUE KEY `ProductCategory` (`ProductId`,`CategoryId`) USING BTREE, 
     PRIMARY KEY(`ProductId`) 
-);;
+);
+
+CREATE TABLE if not exists `Thema` (
+	`ThemaId` INT NOT NULL AUTO_INCREMENT,
+	`NavBarFixed` BOOLEAN DEFAULT NULL,
+	`NavBarColor` VARCHAR(240) DEFAULT '"rgba(0, 0, 0, 0.15)"' COMMENT 'rgba(0, 0, 0, 0.15)',
+	`FontFamily` VARCHAR(240) NOT NULL,
+	`SideBarColor` VARCHAR(240) DEFAULT '"rgba(0, 0, 0, 0.15)"' COMMENT 'rgba(0, 0, 0, 0.15)',
+	PRIMARY KEY (`ThemaId`)
+);
+INSERT INTO `thema`(`NavBarFixed`, `NavBarColor`, `FontFamily`, `SideBarColor`) VALUES (true,"rgba(0, 0, 0, 0.15)","Verdana","rgba(0, 0, 0, 0.15)")
