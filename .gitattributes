@@ -3,6 +3,7 @@
 ###############################################################################
 * text=auto
 *.htm inguist-detectable=false
+*.html inguist-detectable=false
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
