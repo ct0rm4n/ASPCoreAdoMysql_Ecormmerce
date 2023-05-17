@@ -1,7 +1,7 @@
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
-* text=auto
+*.html linguist-vendored=false
 *.htm inguist-detectable=false
 *.html inguist-detectable=false
 ###############################################################################
